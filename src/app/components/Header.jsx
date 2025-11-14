@@ -28,13 +28,7 @@ export default function Header() {
     { name: "Contact", href: "/contact" }
   ];
 
-  const mobileNavItems = [
-    { name: "Home", href: "/" },
-    { name: "Insights", href: "/insights" },
-    { name: "Services", href: "/services" },
-    { name: "Development", href: "/development" },
-    { name: "Contact", href: "/contact" }
-  ];
+  const mobileNavItems = [...navItems];
 
   return (
     <motion.header
@@ -49,7 +43,8 @@ export default function Header() {
     >
       <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-16">
         <nav className="grid grid-cols-3 gap-2 items-center">
-          {/* Left Side Logo with Image */}
+          
+          {/* Left Logo */}
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -72,7 +67,7 @@ export default function Header() {
             </Link>
           </motion.div>
 
-          {/* Company Name - Center */}
+          {/* Company Name */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,9 +89,10 @@ export default function Header() {
             </Link>
           </motion.div>
 
-          {/* Right Side - Desktop Navigation / Mobile Menu Button */}
+          {/* Right Side Navigation */}
           <div className="flex justify-end items-center">
-            {/* Desktop Navigation */}
+
+            {/* Desktop Menu */}
             <ul className="hidden md:flex space-x-1 lg:space-x-2 xl:space-x-4 2xl:space-x-6 font-bold">
               {navItems.map((item, i) => (
                 <motion.li
@@ -107,7 +103,15 @@ export default function Header() {
                   transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
                   className="relative group cursor-pointer"
                 >
-                  <Link href={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => {
+                      if (item.href === "/services") {
+                        e.preventDefault();
+                        window.location.href = "/services"; // Hard reload
+                      }
+                    }}
+                  >
                     <motion.span
                       className="font-sans text-[10px] lg:text-xs xl:text-sm tracking-wider whitespace-nowrap inline-block text-black"
                       whileHover={{ scale: 1.05, y: -2 }}
@@ -175,7 +179,13 @@ export default function Header() {
                 <Link
                   href={item.href}
                   className="font-sans block py-2 text-base sm:text-lg relative text-black"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    if (item.href === "/services") {
+                      e.preventDefault();
+                      window.location.href = "/services"; // Hard reload
+                    }
+                  }}
                 >
                   <span className="relative">
                     {item.name}
