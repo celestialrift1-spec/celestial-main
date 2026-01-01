@@ -56,7 +56,7 @@ export default function Header() {
           >
             <Link href="/" className="flex items-center justify-center h-full">
               <img
-                src="/images/logo.svg"
+                src="/images/logo.png"
                 alt="Company Logo"
                 className={`object-contain transition-transform duration-300 ${
                   scrolled
